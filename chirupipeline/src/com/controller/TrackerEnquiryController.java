@@ -2,6 +2,7 @@
 package com.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dao.TrackerEnquiryDao;
+import com.google.gson.Gson;
 import com.model.MainModelForm;
 import com.model.RejectEnquiry;
 import com.model.RejectRfp;
@@ -29,7 +31,7 @@ public class TrackerEnquiryController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String getEnquiryid(Model model) {
-
+		System.out.println("hello");
 		List<TrackerEnquiry> enquiry = trackerenquirydao.getEnquiryById();
 
 		for (TrackerEnquiry x : enquiry) {
@@ -50,9 +52,9 @@ public class TrackerEnquiryController {
 		}
 		model.addAttribute("approve", approve);
 
-		List<TrackerEnquiry> converttorfo = trackerenquirydao.getconverttorfp();
+		List<RejectRfp> converttorfo = trackerenquirydao.getconverttorfp();
 
-		for (TrackerEnquiry x : converttorfo) {
+		for (RejectRfp x : converttorfo) {
 			System.out.println(x);
 		}
 		model.addAttribute("converttorfo", converttorfo);
@@ -70,16 +72,29 @@ public class TrackerEnquiryController {
 		model.addAttribute("rfpapprove", rfpapprove);
 
 		mainmodelform.setTrackerenquiry(enquiry);
+		mainmodelform.setRejectenjuiry(reject);
+		mainmodelform.setApproveenquiry(approve);
+		mainmodelform.setConvertrfp(converttorfo);
+		mainmodelform.setRejectrfp(rfpreject);
+		mainmodelform.setRfpapproive(rfpapprove);
+		model.addAttribute("viewmodel", mainmodelform);
 
 		return "Enquirystage";
 
 	}
 
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
-	public ResponseEntity<String> getform(@RequestParam("id") String id) {
+	public ResponseEntity<String> getform(@RequestParam("id") String id, Model model) {
 		System.out.println(id);
 		String data = mainservice.checkEnquiryStatus(Integer.parseInt(id.trim()));
-		return ResponseEntity.ok(data);
+
+		Map<String, Object> enquiryStatus = mainservice.checkEnquiryStatu(Integer.parseInt(id.trim()));
+		System.out.println(enquiryStatus);
+
+		new Gson().toJson(enquiryStatus);
+
+		return ResponseEntity.ok(new Gson().toJson(enquiryStatus));
+
 	}
 
 }

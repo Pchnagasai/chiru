@@ -1,3 +1,4 @@
+<%@page import="javax.management.AttributeValueExp"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.List, com.model.*,com.model.TrackerEnquiry,com.model.RejectEnquiry,com.model.TrackerEnquiry,com.model.RejectRfp,com.model.MainModelForm" %>
@@ -75,6 +76,7 @@
 
 	    <form id="overlayForm" class="hidden-form">
       <!-- Form fields -->
+      <h1>Enquary</h1><br>
       <label for="enqrid">Enquiry ID:</label>
       <input type="number" id="enqrid" name="enqrid" required readonly><br><br>
       
@@ -87,40 +89,45 @@
       <label for="enqrsubject">Enquiry Subject:</label>
       <input type="text" id="enqrsubject" name="enqrsubject" required readonly><br><br>
       
-       <label for="enqrdesc">Enquiry Desc:</label>
-      <input type="text" id="enqrdesc" name="enqrdesc" required readonly><br><br>
+      
       
        <label for="enqrassignto">Enquiry Assigned To:</label>
       <input type="text" id="enqrassignto" name="enqrassignto" required readonly><br><br>
       
        <label for="enqrluser">Enquiry last_user:</label>
       <input type="text" id="enqrluser" name="enqrluser" required readonly><br><br>
-      
-    
+      <label for="status">status:</label>
+      <input type="text" id="status" name="status" required readonly><br><br>
+     
    </form>
+   
+   
+       
+   
+   
    <form id="rfp" class="hidden-form">
+   <h1>RFP</h1><br>
    <label for="rfpenqrid">RFP Enquiry ID:</label>
-      <input type="number" id="rfpenqrid" name="rfpenqrid" required readonly><br>
-      
-      <label for="rfpassignto">rfp Assigned To:</label>
-      <input type="text" id="rfpassignto" name="rfpassignto" required readonly><br>
-      
-       <label for="rfpsubject">Rfp Subject:</label>
-      <input type="text" id="rfpsubject" name="rfpsubject" required readonly><br>
-      
-      <label for="rfpintronote">Rfp Intro Note:</label>
-      <input type="text" id="rfpintronote" name="rfpintronote" required readonly><br>
-      
-       <label for="rfprrfpcid">Rfpr Rfpc Id:</label>
-      <input type="text" id="rfprrfpcid" name="rfprrfpcid" required readonly><br>
+      <input type="number" id="rfpenqrid" name="rfpenqrid" required readonly><br><br>
       
        <label for="rfprcreatedausrid">Rfpr Created Auser Id:</label>
-      <input type="text" id="rfprcreatedausrid" name="rfprcreatedausrid" required readonly><br>
+      <input type="text" id="rfprcreatedausrid" name="rfprcreatedausrid" required readonly><br><br>
       
        <label for="rfprstatus">Rfpr Status:</label>
-      <input type="text" id="rfprstatus" name="rfprstatus" required readonly><br>
+      <input type="text" id="rfprstatus" name="rfprstatus" required readonly><br><br>
       
-   
+      <label for="rfpassignto">rfp Assigned To:</label>
+      <input type="text" id="rfpassignto" name="rfpassignto" required readonly><br><br>
+      
+       <label for="rfpsubject">Rfp Subject:</label>
+      <input type="text" id="rfpsubject" name="rfpsubject" required readonly><br><br>
+      
+      <label for="rfpintronote">Rfp Intro Note:</label>
+      <input type="text" id="rfpintronote" name="rfpintronote" required readonly><br><br>
+      
+      <label for="rfpstatus">status:</label>
+      <input type="text" id="rfpstatus" name="rfpstatus" required readonly><br><br>
+     
    
    
    </form>
@@ -130,7 +137,7 @@
 
 <% List<TrackerEnquiry> enqid = (List<TrackerEnquiry>) request.getAttribute("enquiry"); %>
 <% List<RejectEnquiry> rejectdata = (List<RejectEnquiry>) request.getAttribute("reject"); %>
-<% List<TrackerEnquiry> convertrfp = (List<TrackerEnquiry>) request.getAttribute("converttorfo"); %>
+<% List<RejectRfp> convertrfp = (List<RejectRfp>) request.getAttribute("converttorfo"); %>
 <% List<RejectRfp> rfprejected = (List<RejectRfp>)request.getAttribute("rfpreject"); %>
 <%List<RejectRfp> rfpapprove =(List<RejectRfp>)request.getAttribute("rfpapprove"); %>
 
@@ -167,8 +174,8 @@
             
             <% boolean isConvertedToRfp = false;
             for (int k = 0; k < convertrfp.size(); k++) {
-                TrackerEnquiry rfp = convertrfp.get(k);
-                if (rfp.getEnqrid() == enqid.get(i).getEnqrid()) {
+            	RejectRfp rfp = convertrfp.get(k);
+                if (rfp.getRfprenqrid() == enqid.get(i).getEnqrid()) {
                     isConvertedToRfp = true;
                     break;
                 }
@@ -210,7 +217,7 @@
             <% } else { %>
             <td></td>
             <% } %>
-            <td>"-"</td>
+            <td></td>
               <td>
            
                  <button class="btn btn-primary request-button" data-form="overlayForm" 
@@ -240,10 +247,19 @@
                 form.find('#enqrcustid').val(''); // Populate with customer ID data
                 form.find('#enqrcreatby').val(''); // Populate with created by data
                 form.find('#enqrsubject').val(''); // Populate with subject data
-                form.find('#enqrdesc').val(''); // Populate with description data
+                                                   // Populate with description data
                 form.find('#enqrassignto').val(''); // Populate with assigned to data
                 form.find('#enqrluser').val(''); // Populate with last user data
-      
+                form.find('#status').val('');
+                
+                
+                form.find('#rfpenqrid').val(rfpenqrid);
+                form.find('#rfprcreatedausrid').val('');
+                form.find('#rfprstatus').val('');
+                form.find('#rfpassignto').val('');
+                form.find('#rfpsubject').val('');
+                form.find('#rfpintronote').val('');
+                form.find('#rfpstatus').val('');
       
       
       formOverlay.fadeIn();
@@ -267,6 +283,10 @@
     }
   });
   
+  
+  
+  
+  
   function getForm(id) {
 	  $.ajax({
 	    url: "form", // Replace with the actual URL to retrieve the form data
@@ -276,19 +296,199 @@
 	    },
 	    success: function(response) {
 	      // Handle the response and populate the form fields
-	      console.log(response)
-	      if(response='rejected'){
-	      $("#enqrid").val(response.enqrid);
-	      $("#enqrcustid").val(response.enqrcustid);
-	      $("#enqrcreatby").val(response.enqrcreatby);
-	      $("#enqrsubject").val(response.enqrsubject);
-	      $("#enqrdesc").val(response.enqrdesc);
-	      $("#enqrassignto").val(response.enqrassignto);
-	      $("#enqrluser").val(response.enqrluser);
-	      // Show the form overlay
-	      $("#formOverlay").fadeIn();
-	      }
 	      
+	      
+	     console.log(response)
+	      
+	    
+	     const parsedResponse = JSON.parse(response);
+
+// Extract the values
+         const status = parsedResponse.status;
+	      
+	      if (status === 'reject') {
+	    	  const enqrId = parsedResponse.data.enqr_id;
+	    	  const enqCustId = parsedResponse.data.enqcustid;
+	    	  const enqrCreatedBy = parsedResponse.data.enqrcreatedby;
+	    	  const enqrSubject = parsedResponse.data.enqrsubject;
+	    	  const enqrLUser = parsedResponse.data.enqrluser;
+	    	  const status = parsedResponse.status;
+	    	  
+	    	  console.log('enqr_id:', enqrId);
+	    	  console.log('enqcustid:', enqCustId);
+	    	  console.log('enqrcreatedby:', enqrCreatedBy);
+	    	  console.log('enqrsubject:', enqrSubject);
+	    	  console.log('enqrluser:', enqrLUser);
+	    	  console.log('status', status);
+	    	 
+	    	  	     
+
+
+	       
+	        $("#enqrid").val(enqrId);
+	        $("#enqrcustid").val(enqCustId);
+	        $("#enqrcreatby").val(enqrCreatedBy);
+	        $("#enqrsubject").val(enqrSubject);
+	        $("#enqrassignto").val(enqrLUser);
+	        $("#enqrluser").val(enqrLUser);
+	        $("#status").val(status);
+	        
+	        // Show the form overlay
+	        $("#overlayForm").fadeIn();
+	        $("#rfp").hide();
+	        
+	      } else if (status === 'Approve') {
+	    	  
+	    	  const enqrId = parsedResponse.data.enqr_id;
+	    	  const enqCustId = parsedResponse.data.enqcustid;
+	    	  const enqrCreatedBy = parsedResponse.data.enqrcreatedby;
+	    	  const enqrSubject = parsedResponse.data.enqrsubject;
+	    	  const enqrLUser = parsedResponse.data.enqrluser;
+	    	  const status = parsedResponse.status;
+	    	  
+	    	  
+	    	  
+	    	  
+	    	  
+	    	  console.log('enqr_id:', enqrId);
+	    	  console.log('enqcustid:', enqCustId);
+	    	  console.log('enqrcreatedby:', enqrCreatedBy);
+	    	  console.log('enqrsubject:', enqrSubject);
+	    	  console.log('enqrluser:', enqrLUser);
+	    	  console.log('status', status);
+	    	  
+	        // Handle 'Approve' response
+	        
+	        
+	    	  
+		        $("#enqrid").val(enqrId);
+		        $("#enqrcustid").val(enqCustId);
+		        $("#enqrcreatby").val(enqrCreatedBy);
+		        $("#enqrsubject").val(enqrSubject);
+		       
+		        $("#enqrassignto").val(enqrLUser);
+		        $("#enqrluser").val(enqrLUser);
+		        $("#status").val(status);
+		        // Show the form overlay
+		        $("#overlayForm").fadeIn();
+		        $("#rfp").hide();
+	       
+	        
+	      } else if (status === 'convertrfp') {
+	        // Handle 'convertrfp' response
+	        
+	    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+	    	  const rfprcreatedausrid = parsedResponse.data. rfpr_created_ausr_id;
+	    	  const rfprstatus = parsedResponse.data.rfpr_status;
+	    	  const rfpassignto = parsedResponse.data.rfpr_assignedto;
+	    	  const rfpsubject = parsedResponse.data.rfpr_subject;
+	    	  const rfpintronote = parsedResponse.data.rfpr_intro_note;
+	    	  const status = parsedResponse.status;
+	    	  
+	
+	    	  
+	    	  console.log('rfprenqr_id:', rfprenqrId);
+	    	  console.log('rfprcreatedausrid:', rfprcreatedausrid);
+	    	  console.log('enqrcreatedby:', rfprstatus);
+	    	  console.log('rfprstatus:', rfpassignto);
+	    	  console.log('rfpsubject:', rfpsubject);
+	    	 console.log('rfpintronote',rfpintronote);
+	    	 console.log('rfpstatus', status);    
+
+	    	 
+	       
+	        $("#rfpenqrid").val(rfprenqrId);
+	        $("#rfprcreatedausrid").val(rfprcreatedausrid);
+	        $("#rfprstatus").val(rfprstatus);
+	        $("#rfpassignto").val(rfpassignto);
+	       
+	        $("#rfpsubject").val(rfpsubject);
+	        $("#rfpintronote").val(rfpintronote);
+	        $("#rfpstatus").val(status);
+	        // Show the form overlay
+	        $("#rfp").fadeIn();
+	        $("#overlayForm").hide();
+	       
+	        
+	       
+	        
+	      } else if (status === 'rfpreject') {
+	        // Handle 'rfpreject' response
+	        
+	    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+	    	  const rfprcreatedausrid = parsedResponse.data. rfpr_created_ausr_id;
+	    	  const rfprstatus = parsedResponse.data.rfpr_status;
+	    	  const rfpassignto = parsedResponse.data.rfpr_assignedto;
+	    	  const rfpsubject = parsedResponse.data.rfpr_subject;
+	    	  const rfpintronote = parsedResponse.data.rfpr_intro_note;
+	    	  const status = parsedResponse.status;
+	    	  
+	
+	    	  
+	    	  console.log('rfprenqr_id:', rfprenqrId);
+	    	  console.log('rfprcreatedausrid:', rfprcreatedausrid);
+	    	  console.log('enqrcreatedby:', rfprstatus);
+	    	  console.log('rfprstatus:', rfpassignto);
+	    	  console.log('rfpsubject:', rfpsubject);
+	    	 console.log('rfpintronote',rfpintronote);
+	    	 console.log('rfpstatus', status);        
+
+	    	 
+	       
+	        $("#rfpenqrid").val(rfprenqrId);
+	        $("#rfprcreatedausrid").val(rfprcreatedausrid);
+	        $("#rfprstatus").val(rfprstatus);
+	        $("#rfpassignto").val(rfpassignto);
+	       
+	        $("#rfpsubject").val(rfpsubject);
+	        $("#rfpintronote").val(rfpintronote);
+	        $("#rfpstatus").val(status);
+	        // Show the form overlay
+	        $("#rfp").fadeIn();
+	        $("#overlayForm").hide();
+	       
+	        
+	        
+	        
+	        
+	      } else if (status === 'rfpapprove'){
+	        // Handle other responses
+	        
+	    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+	    	  const rfprcreatedausrid = parsedResponse.data. rfpr_created_ausr_id;
+	    	  const rfprstatus = parsedResponse.data.rfpr_status;
+	    	  const rfpassignto = parsedResponse.data.rfpr_assignedto;
+	    	  const rfpsubject = parsedResponse.data.rfpr_subject;
+	    	  const rfpintronote = parsedResponse.data.rfpr_intro_note;
+	    	  const status = parsedResponse.status;
+	    	  
+	
+	    	  
+	    	  console.log('rfprenqr_id:', rfprenqrId);
+	    	  console.log('rfprcreatedausrid:', rfprcreatedausrid);
+	    	  console.log('enqrcreatedby:', rfprstatus);
+	    	  console.log('rfprstatus:', rfpassignto);
+	    	  console.log('rfpsubject:', rfpsubject);
+	    	 console.log('rfpintronote',rfpintronote);
+	    	 console.log('rfpstatus', status);        
+
+	    	 
+	       
+	        $("#rfpenqrid").val(rfprenqrId);
+	        $("#rfprcreatedausrid").val(rfprcreatedausrid);
+	        $("#rfprstatus").val(rfprstatus);
+	        $("#rfpassignto").val(rfpassignto);
+	       
+	        $("#rfpsubject").val(rfpsubject);
+	        $("#rfpintronote").val(rfpintronote);
+	        $("#rfpstatus").val(status);
+	        // Show the form overlay
+	        $("#rfp").fadeIn();
+	        $("#overlayForm").hide();
+	       
+	        
+	        
+	      }
 	    },
 	    error: function() {
 	      // Handle the error case
@@ -296,7 +496,7 @@
 	    }
 	  });
 	}
-  
+
   
 </script>
 
@@ -305,6 +505,3 @@
 
 </body>
 </html>
-
-
-

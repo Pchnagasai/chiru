@@ -10,7 +10,7 @@ public class TrackerEnquiry {
 	private int enqcustid;
 	private String enqrcreatedby;
 	private String enqrsubject;
-	private String enqrdesc;
+
 	private String enqrassignto;
 	private String enqrluser;
 
@@ -46,14 +46,6 @@ public class TrackerEnquiry {
 		this.enqrsubject = enqrsubject;
 	}
 
-	public String getEnqrdesc() {
-		return enqrdesc;
-	}
-
-	public void setEnqrdesc(String enqrdesc) {
-		this.enqrdesc = enqrdesc;
-	}
-
 	public String getEnqrassignto() {
 		return enqrassignto;
 	}
@@ -73,8 +65,8 @@ public class TrackerEnquiry {
 	@Override
 	public String toString() {
 		return "TrackerEnquiry [enqrid=" + enqrid + ", enqcustid=" + enqcustid + ", enqrcreatedby=" + enqrcreatedby
-				+ ", enqrsubject=" + enqrsubject + ", enqrdesc=" + enqrdesc + ", enqrassignto=" + enqrassignto
-				+ ", enqrluser=" + enqrluser + "]";
+				+ ", enqrsubject=" + enqrsubject + ", " + ", enqrassignto=" + enqrassignto + ", enqrluser=" + enqrluser
+				+ "]";
 	}
 
 }

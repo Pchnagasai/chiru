@@ -10,7 +10,7 @@ public class MainModelForm {
 
 	private List<TrackerEnquiry> Approveenquiry;
 
-	private List<TrackerEnquiry> convertrfp;
+	private List<RejectRfp> convertrfp;
 
 	private List<RejectRfp> rejectrfp;
 
@@ -40,11 +40,11 @@ public class MainModelForm {
 		this.rejectrfp = rejectrfp;
 	}
 
-	public List<TrackerEnquiry> getConvertrfp() {
+	public List<RejectRfp> getConvertrfp() {
 		return convertrfp;
 	}
 
-	public void setConvertrfp(List<TrackerEnquiry> convertrfp) {
+	public void setConvertrfp(List<RejectRfp> convertrfp) {
 		this.convertrfp = convertrfp;
 	}
 

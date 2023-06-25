@@ -15,7 +15,7 @@ public interface TrackerEnquiryDao {
 
 	List<TrackerEnquiry> getenquiryapprove();
 
-	List<TrackerEnquiry> getconverttorfp();
+	List<RejectRfp> getconverttorfp();
 
 	List<RejectRfp> getrfpreject();
 

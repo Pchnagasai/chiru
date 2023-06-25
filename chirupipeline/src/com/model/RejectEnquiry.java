@@ -1,4 +1,3 @@
-
 package com.model;
 
 public class RejectEnquiry {
@@ -10,8 +9,7 @@ public class RejectEnquiry {
 	private int enqcustid;
 	private String enqrcreatedby;
 	private String enqrsubject;
-	private String enqrdesc;
-	private String enqrassignto;
+
 	private String enqrluser;
 
 	public int getEnqr_id() {
@@ -54,22 +52,6 @@ public class RejectEnquiry {
 		this.enqrsubject = enqrsubject;
 	}
 
-	public String getEnqrdesc() {
-		return enqrdesc;
-	}
-
-	public void setEnqrdesc(String enqrdesc) {
-		this.enqrdesc = enqrdesc;
-	}
-
-	public String getEnqrassignto() {
-		return enqrassignto;
-	}
-
-	public void setEnqrassignto(String enqrassignto) {
-		this.enqrassignto = enqrassignto;
-	}
-
 	public String getEnqrluser() {
 		return enqrluser;
 	}
@@ -81,8 +63,8 @@ public class RejectEnquiry {
 	@Override
 	public String toString() {
 		return "RejectEnquiry [enqr_id=" + enqr_id + ", enqid=" + enqid + ", enqcustid=" + enqcustid
-				+ ", enqrcreatedby=" + enqrcreatedby + ", enqrsubject=" + enqrsubject + ", enqrdesc=" + enqrdesc
-				+ ", enqrassignto=" + enqrassignto + ", enqrluser=" + enqrluser + "]";
+				+ ", enqrcreatedby=" + enqrcreatedby + ", enqrsubject=" + enqrsubject + ", " + ", " + ", enqrluser="
+				+ enqrluser + "]";
 	}
 
 	public String getEnqr_status() {

@@ -5,12 +5,12 @@ import java.sql.SQLException;
 
 import org.springframework.jdbc.core.RowMapper;
 
-public class TrackerRfpRowMapper implements RowMapper<TrackerRfp> {
+public class TrackerRfpRowMapper implements RowMapper<RejectEnquiry> {
 
 	@Override
-	public TrackerRfp mapRow(ResultSet rs, int rowNum) throws SQLException {
+	public RejectEnquiry mapRow(ResultSet rs, int rowNum) throws SQLException {
 		// TODO Auto-generated method stub
-		TrackerRfp trackerrfp = new TrackerRfp();
+		RejectEnquiry trackerrfp = new RejectEnquiry();
 
 		trackerrfp.setEnqr_id(rs.getInt("enqr_id"));
 		trackerrfp.setEnqr_status(rs.getString("enqr_status"));

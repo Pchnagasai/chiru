@@ -17,7 +17,7 @@ public class EnquiryRowMapper implements RowMapper<TrackerEnquiry> {
 		enquiry.setEnqcustid(rs.getInt("enqr_cust_id"));
 		enquiry.setEnqrcreatedby(rs.getString("enqr_createdby"));
 		enquiry.setEnqrsubject(rs.getString("enqr_subject"));
-		enquiry.setEnqrdesc(rs.getString("enqr_desc"));
+
 		enquiry.setEnqrassignto(rs.getString("enqr_assigned_to"));
 		enquiry.setEnqrluser(rs.getString("enqr_luser"));
 
