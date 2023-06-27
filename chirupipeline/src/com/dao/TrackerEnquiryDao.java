@@ -6,6 +6,7 @@ import java.util.List;
 import com.model.RejectEnquiry;
 import com.model.RejectRfp;
 import com.model.TrackerEnquiry;
+import com.model.TrackerRfp;
 
 public interface TrackerEnquiryDao {
 
@@ -20,5 +21,7 @@ public interface TrackerEnquiryDao {
 	List<RejectRfp> getrfpreject();
 
 	List<RejectRfp> getRfpApprove();
+
+	List<TrackerRfp> getcompleted();
 
 }

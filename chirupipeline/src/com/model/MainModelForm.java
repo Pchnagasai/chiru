@@ -16,6 +16,8 @@ public class MainModelForm {
 
 	private List<RejectRfp> rfpapproive;
 
+	private List<TrackerRfp> rfpcompleted;
+
 	public List<TrackerEnquiry> getTrackerenquiry() {
 		return trackerenquiry;
 	}
@@ -70,6 +72,14 @@ public class MainModelForm {
 
 	public void setApproveenquiry(List<TrackerEnquiry> approveenquiry) {
 		Approveenquiry = approveenquiry;
+	}
+
+	public List<TrackerRfp> getRfpcompleted() {
+		return rfpcompleted;
+	}
+
+	public void setRfpcompleted(List<TrackerRfp> rfpcompleted) {
+		this.rfpcompleted = rfpcompleted;
 	}
 
 }

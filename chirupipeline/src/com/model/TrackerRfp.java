@@ -2,37 +2,66 @@ package com.model;
 
 public class TrackerRfp {
 
-	private int enqr_id;
-	private String enqr_status;
-	private String rfpr_status;
+	private int rfpr_id;
+	private String rpfd_reviewedby;
+	private String rfpd_desc;
+	private String rpdf_status;
+	private String rfpd_type;
+	private String rfpd_sharedstatus;
 
-	public int getEnqr_id() {
-		return enqr_id;
+	public int getRfpr_id() {
+		return rfpr_id;
 	}
 
-	public void setEnqr_id(int enqr_id) {
-		this.enqr_id = enqr_id;
+	public void setRfpr_id(int rfpr_id) {
+		this.rfpr_id = rfpr_id;
 	}
 
-	public String getEnqr_status() {
-		return enqr_status;
+	public String getRpfd_reviewedby() {
+		return rpfd_reviewedby;
 	}
 
-	public void setEnqr_status(String enqr_status) {
-		this.enqr_status = enqr_status;
+	public void setRpfd_reviewedby(String rpfd_reviewedby) {
+		this.rpfd_reviewedby = rpfd_reviewedby;
 	}
 
-	public String getRfpr_status() {
-		return rfpr_status;
+	public String getRfpd_desc() {
+		return rfpd_desc;
 	}
 
-	public void setRfpr_status(String rfpr_status) {
-		this.rfpr_status = rfpr_status;
+	public void setRfpd_desc(String rfpd_desc) {
+		this.rfpd_desc = rfpd_desc;
+	}
+
+	public String getRpdf_status() {
+		return rpdf_status;
+	}
+
+	public void setRpdf_status(String rpdf_status) {
+		this.rpdf_status = rpdf_status;
+	}
+
+	public String getRfpd_type() {
+		return rfpd_type;
+	}
+
+	public void setRfpd_type(String rfpd_type) {
+		this.rfpd_type = rfpd_type;
+	}
+
+	public String getRfpd_sharedstatus() {
+		return rfpd_sharedstatus;
+	}
+
+	public void setRfpd_sharedstatus(String rfpd_sharedstatus) {
+		this.rfpd_sharedstatus = rfpd_sharedstatus;
 	}
 
 	@Override
 	public String toString() {
-		return "TrackerRfp [enqr_id=" + enqr_id + ", enqr_status=" + enqr_status + ", rfpr_status=" + rfpr_status + "]";
+		return "TrackerRfp [rfpr_id=" + rfpr_id + ", rpfd_reviewedby=" + rpfd_reviewedby + ", rfpd_desc=" + rfpd_desc
+				+ ", rpdf_status=" + rpdf_status + ", rfpd_type=" + rfpd_type + ", rfpd_sharedstatus="
+				+ rfpd_sharedstatus + "]";
 	}
 
 }

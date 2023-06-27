@@ -18,6 +18,7 @@ import com.model.MainModelForm;
 import com.model.RejectEnquiry;
 import com.model.RejectRfp;
 import com.model.TrackerEnquiry;
+import com.model.TrackerRfp;
 import com.service.MainService;
 
 @Controller
@@ -71,12 +72,21 @@ public class TrackerEnquiryController {
 		}
 		model.addAttribute("rfpapprove", rfpapprove);
 
+		List<TrackerRfp> rfpcompleted = trackerenquirydao.getcompleted();
+
+		for (TrackerRfp x : rfpcompleted) {
+			System.out.println(x);
+		}
+
+		model.addAttribute("rfpcompleted", rfpcompleted);
+
 		mainmodelform.setTrackerenquiry(enquiry);
 		mainmodelform.setRejectenjuiry(reject);
 		mainmodelform.setApproveenquiry(approve);
 		mainmodelform.setConvertrfp(converttorfo);
 		mainmodelform.setRejectrfp(rfpreject);
 		mainmodelform.setRfpapproive(rfpapprove);
+		mainmodelform.setRfpcompleted(rfpcompleted);
 		model.addAttribute("viewmodel", mainmodelform);
 
 		return "Enquirystage";
@@ -86,7 +96,7 @@ public class TrackerEnquiryController {
 	@RequestMapping(value = "/form", method = RequestMethod.GET)
 	public ResponseEntity<String> getform(@RequestParam("id") String id, Model model) {
 		System.out.println(id);
-		String data = mainservice.checkEnquiryStatus(Integer.parseInt(id.trim()));
+		// String data = mainservice.checkEnquiryStatus(Integer.parseInt(id.trim()));
 
 		Map<String, Object> enquiryStatus = mainservice.checkEnquiryStatu(Integer.parseInt(id.trim()));
 		System.out.println(enquiryStatus);

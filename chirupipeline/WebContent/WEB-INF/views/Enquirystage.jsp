@@ -61,7 +61,23 @@
         pointer-events: none;
     }
     
-    
+     td:nth-child(7) {
+    color: green;
+}
+
+
+td:nth-child(3):contains("Approve") {
+    background-color: green;
+    color: white;
+}
+td:nth-child(n):contains("Rejected") {
+    background-color: red;
+}
+
+.green-background {
+  background-color: green;
+  color: white;
+}
     </style>
 </head>
 <body>
@@ -140,7 +156,7 @@
 <% List<RejectRfp> convertrfp = (List<RejectRfp>) request.getAttribute("converttorfo"); %>
 <% List<RejectRfp> rfprejected = (List<RejectRfp>)request.getAttribute("rfpreject"); %>
 <%List<RejectRfp> rfpapprove =(List<RejectRfp>)request.getAttribute("rfpapprove"); %>
-
+<%List<TrackerRfp> rfpcomplete =(List<TrackerRfp>)request.getAttribute("rfpcompleted"); %>
 <h1>Enquiry Tracker</h1>
 <table>
     <tr>
@@ -154,83 +170,264 @@
         <th>View</th>
     </tr>
     <% for (int i = 0; i < enqid.size(); i++) { %>
-        <tr>
+        <tr id="<%= enqid.get(i).getEnqrid() %>">
             <td><%= enqid.get(i).getEnqrid() %></td>
-            <% boolean isRejected = false;
-            for (int j = 0; j < rejectdata.size(); j++) {
-                RejectEnquiry reject = rejectdata.get(j);
-                if (reject.getEnqr_id() == enqid.get(i).getEnqrid()) {
-                    isRejected = true;
-                    break;
-                }
-            }
-            if (isRejected) { %>
-                <td>Rejected</td>
-                <td></td>
-            <% } else { %>
-                <td></td>
-                <td>Approve</td>
-            <% } %>
             
-            <% boolean isConvertedToRfp = false;
-            for (int k = 0; k < convertrfp.size(); k++) {
-            	RejectRfp rfp = convertrfp.get(k);
-                if (rfp.getRfprenqrid() == enqid.get(i).getEnqrid()) {
-                    isConvertedToRfp = true;
-                    break;
-                }
-            }
-            if (isConvertedToRfp) { %>
-                <td>rfps</td>
-            <% } else { %>
-                <td></td>
-            <% } %>
-            
-            <% boolean isRfpRejected = false;
-            for(int l=0;l<rfprejected.size();l++){
-            	RejectRfp rejectrfp = rfprejected.get(l);
-            	if(rejectrfp.getRfprenqrid() == enqid.get(i).getEnqrid()){
-            		isRfpRejected = true;
-            		break;
-            	}
-            }
-            
-            if(isRfpRejected) { %>
-            <td>Rejected</td>
-            <% } else { %>
-            <td></td>
-            <% } %>
-            
-            
-            <% boolean isRfpApprove = false;
-            
-            for(int m=0;m<rfpapprove.size();m++){
-            	RejectRfp approverfp = rfpapprove.get(m);
-            	if(approverfp.getRfprenqrid() == enqid.get(i).getEnqrid()){
-            		isRfpApprove = true;
-            		break;
-            	}
-            }
-            
-            if(isRfpApprove) { %> 
-            <td>Approve</td>
-            <% } else { %>
-            <td></td>
-            <% } %>
-            <td></td>
-              <td>
-           
-                 <button class="btn btn-primary request-button" data-form="overlayForm" 
-                 onclick="getForm('<%=enqid.get(i).getEnqrid() %>');">view</button>
-             
-                 </td>
+           	<td id="<%= "td2"+""+enqid.get(i).getEnqrid() %>"></td>
+           	<td id="<%= "td3"+""+enqid.get(i).getEnqrid() %>"></td>
+           	<td id="<%= "td4"+""+enqid.get(i).getEnqrid() %>"></td>
+           	<td id="<%= "td5"+""+enqid.get(i).getEnqrid() %>"></td>
+           	<td id="<%= "td6"+""+enqid.get(i).getEnqrid() %>"></td>
+           	<td id="<%= "td7"+""+enqid.get(i).getEnqrid() %>"></td>
+           	
+            <td>
+                <button class="btn btn-primary request-button" data-form="overlayForm" 
+                    onclick="getForm('<%=enqid.get(i).getEnqrid() %>');">view</button>
+            </td>
         </tr>
     <% } %>
 </table>
 
 
 <script>
+
+
+$(document).ready(function() {
+	  $("table tr td:nth-child(3)").each(function() {
+	    if ($(this).text() === "Approve") {
+	      $(this).addClass("green-background");
+	    }
+	  });
+	});
+
+
   $(document).ready(function() {
+	  
+	  
+	  
+	  
+      $("tr").each(function() {
+          var enqrid = $(this).attr("id");
+          getStatus(enqrid);
+      });
+      
+      
+      function getStatus(id) {
+    	  $.ajax({
+    	    url: "form", // Replace with the actual URL to retrieve the form data
+    	    method: "GET",
+    	    data: {
+    	      id: id
+    	    },
+    	    success: function(response) {
+    	      // Handle the response and populate the form fields
+    	      
+    	      
+    	     console.log(response)
+    	      
+    	    
+    	     const parsedResponse = JSON.parse(response);
+
+    // Extract the values
+             const status = parsedResponse.status;
+    	      
+    	      if (status === 'reject') {
+    	    	  const enqrId = parsedResponse.data.enqr_id;
+    	    	
+    	    	  const status = parsedResponse.status;
+    	    	  
+    	    	  console.log('enqr_id:', enqrId);
+    	    
+    	    	  console.log('status', status);
+    	       
+    	    	  $("#td2"+id).text(status);
+    	        
+    	      }
+    	      else if (status === 'Approve') {
+    	    	  
+    	    	  const enqrId = parsedResponse.data.enqr_id;
+    	    	 
+    	    	  const status = parsedResponse.status;
+    	    	  
+    	    	  
+    	    	  
+    	    	  console.log('enqr_id:', enqrId);
+    	    	
+    	    	  console.log('status', status);
+    	    	  
+    	        // Handle 'Approve' response
+    	        
+    	        
+    	    	  $("#td3"+id).text(status);
+    		       
+    	       
+    	        
+    	      }
+    	      
+    	      else if (status === 'convertrfp') {
+    		        // Handle 'convertrfp' response
+    		        
+    		    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+    		    	  
+    		    	  const status = parsedResponse.status;
+    		    	  
+    		
+    		    	  
+    		    	  console.log('rfprenqr_id:', rfprenqrId);
+    		    	 
+    		    	 console.log('rfpstatus', status);    
+
+    		    	 
+    		    	  
+       	    	  $("#td4"+id).text(status);
+       		  
+    		     
+    		        
+    		       
+    		        
+    		      }
+    	      
+    	      
+    	      
+    	      else if (status === 'rfpreject') {
+    		        // Handle 'rfpreject' response
+    		        
+    		    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+    		    	 
+    		    	  const status = parsedResponse.status;
+    		    	  
+    		
+    		    	  
+    		    	  console.log('rfprenqr_id:', rfprenqrId);
+    		    	  
+    		    	 console.log('rfpstatus', status);        
+
+    		    
+    		    	 $("#td5"+id).text(status);
+    		        
+    		        
+    		        
+    		      } else if (status === 'rfpapprove'){
+    		        // Handle other responses
+    		        
+    		    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+    		    	 
+    		    	  const status = parsedResponse.status;
+    		    	  
+    		
+    		    	  
+    		    	  console.log('rfprenqr_id:', rfprenqrId);
+    		    	 
+    		    	 console.log('rfpstatus', status);        
+
+    		    	 $("#td6"+id).text(status);
+    		      
+    		       
+    		        
+    		        
+    		      }
+    		      else if(status=="rfpcomplete"){
+    		    	  
+    		    	  const rfprenqrId = parsedResponse.data.rfprenqrid;
+     		    	 
+    		    	  const status = parsedResponse.status;
+    		    	  
+    		
+    		    	  
+    		    	  console.log('rfprenqr_id:', rfprenqrId);
+    		    	 
+    		    	 console.log('rfpstatus', status);   
+    		    	  
+    		    	 $("#td7"+id).text(status);
+    		    	  
+    		      }
+    	      
+    	      
+    	      
+    	      
+    	      
+    	      
+    	      
+    	      
+    	      
+    	    },
+    	    error: function() {
+    	      // Handle the error case
+    	      console.log("Error occurred while retrieving form data.");
+    	    }
+    	  });
+    	}
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+	  
+	  
+	  
+	  
+	  
+	  
+	  
+	  
     var formOverlay = $('#formOverlay');
     var formContainer = formOverlay.find('.form-container');
     
@@ -488,6 +685,13 @@
 	       
 	        
 	        
+	      }
+	      else if(status=="rfpcomplete"){
+	    	  
+	    	  
+	    	  
+	    	  
+	    	  
 	      }
 	    },
 	    error: function() {

@@ -11,6 +11,8 @@ import com.dao.TrackerEnquiryDao;
 import com.model.MainModelForm;
 import com.model.RejectEnquiry;
 import com.model.RejectRfp;
+import com.model.TrackerEnquiry;
+import com.model.TrackerRfp;
 
 @Service
 public class MainService {
@@ -20,46 +22,6 @@ public class MainService {
 	@Autowired
 	private TrackerEnquiryDao trackerenquiry;
 
-	public String checkEnquiryStatus(int id) {
-		// HashMap<String,RejectEnquiry>
-
-		List<RejectEnquiry> rejects = mainmodelform.getRejectenquiry();
-
-		List<RejectRfp> converttorfo = mainmodelform.getConvertrfp();
-		List<RejectRfp> rfpreject = mainmodelform.getRejectrfp();
-		List<RejectRfp> rfpapprove = mainmodelform.getRfpapproive();
-
-		for (RejectEnquiry reject : rejects) {
-			if (reject.getEnqr_id() == id) {
-				// return new HashMap<String,RejectEnquiry>().put("reject", reject);
-				return "reject";
-			}
-		}
-
-		String temp = "Approve";
-
-		for (RejectRfp convertrfp : converttorfo) {
-			if (convertrfp.getRfprenqrid() == id) {
-				temp = "convertrfp";
-			}
-		}
-		for (RejectRfp rfprejec : rfpreject) {
-			if (rfprejec.getRfprenqrid() == id) {
-				temp = "rfpreject";
-			}
-
-		}
-		for (RejectRfp rfpapprov : rfpapprove) {
-			if (rfpapprov.getRfprenqrid() == id) {
-				temp = "rfpapprove";
-			}
-
-		}
-
-		// return new HashMap<String,>;
-		return "Approve";
-	}
-
 	public Map<String, Object> checkEnquiryStatu(int id) {
 		Map<String, Object> statusMap = new HashMap<>();
 
@@ -68,6 +30,8 @@ public class MainService {
 		List<RejectRfp> converttorfo = trackerenquiry.getconverttorfp();
 		List<RejectRfp> rfpreject = trackerenquiry.getrfpreject();
 		List<RejectRfp> rfpapprove = trackerenquiry.getRfpApprove();
+		List<TrackerEnquiry> enqrapp = trackerenquiry.getenquiryapprove();
+		List<TrackerRfp> rfpcompleted = trackerenquiry.getcompleted();
 
 		for (RejectEnquiry reject : rejects) {
 			if (reject.getEnqr_id() == id) {
@@ -76,6 +40,14 @@ public class MainService {
 				System.out.println(reject.getEnqid());
 
 				return statusMap;
+			}
+		}
+		for (TrackerEnquiry enqapprove : enqrapp) {
+			if (enqapprove.getEnqrid() == id) {
+				statusMap.put("status", "Approve");
+				statusMap.put("data", enqapprove);
+				System.out.println(enqapprove.getEnqrid());
+
 			}
 		}
 
@@ -99,6 +71,14 @@ public class MainService {
 			if (rfpapprov.getRfprenqrid() == id) {
 				statusMap.put("status", "rfpapprove");
 				statusMap.put("data", rfpapprov);
+
+			}
+		}
+
+		for (TrackerRfp rfpcomplete : rfpcompleted) {
+			if (rfpcomplete.getRfpr_id() == id) {
+				statusMap.put("status", "rfpcomplete");
+				statusMap.put("data", rfpcomplete);
 				return statusMap;
 			}
 		}
