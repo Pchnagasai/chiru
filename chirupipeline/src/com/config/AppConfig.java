@@ -15,7 +15,7 @@ import com.model.MainModelForm;
 public class AppConfig {
 	@Bean
 	public DataSource dataSource() {
-		// Configure and return the DataSource bean based on your database settings
+		// // Configure and return the DataSource bean based on your database settings
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("org.postgresql.Driver");
 		dataSource.setUrl("jdbc:postgresql://192.168.110.48/plf_training");
@@ -26,7 +26,7 @@ public class AppConfig {
 
 	@Bean
 	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
-		return new JdbcTemplate(dataSource());
+		return new JdbcTemplate(dataSource);
 	}
 
 	@Bean

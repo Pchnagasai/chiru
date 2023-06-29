@@ -21,35 +21,35 @@ public class TrackerEnquiryDaoImp implements TrackerEnquiryDao {
 	private JdbcTemplate jdbctemplate;
 
 	@Override
-	public List<TrackerEnquiry> getEnquiryById() {
+	public List<TrackerEnquiry> getEnquiry() {
 		// TODO Auto-generated method stub
 		String trackerenquiry = "SELECT DISTINCT te.enqr_id, te.enqr_cust_id, te.enqr_createdby, te.enqr_subject, te.enqr_assigned_to, te.enqr_luser FROM tracker_enquiries te  JOIN rejectedenquiries rd ON te.enqr_id != rd.e_id ORDER BY te.enqr_id ";
 		return jdbctemplate.query(trackerenquiry, new EnquiryRowMapper());
 	}
 
 	@Override
-	public List<RejectEnquiry> getenquiryreject() {
+	public List<RejectEnquiry> getEnquiryReject() {
 		// TODO Auto-generated method stub
 		String enquiryreject = "select rd.e_id ,te.enqr_id,te.enqr_cust_id,te.enqr_createdby,te.enqr_subject,te.enqr_luser  from tracker_enquiries te join rejectedenquiries rd on te.enqr_id=rd.e_id  ";
 		return jdbctemplate.query(enquiryreject, new RejectRowMapper());
 	}
 
 	@Override
-	public List<TrackerEnquiry> getenquiryapprove() {
+	public List<TrackerEnquiry> getEnquiryApprove() {
 		// TODO Auto-generated method stub
 		String enquiryapprove = "select enqr_id,enqr_cust_id,enqr_createdby,enqr_subject,enqr_assigned_to,enqr_luser from tracker_enquiries where enqr_id not in (select e_id from rejectedenquiries)";
 		return jdbctemplate.query(enquiryapprove, new EnquiryRowMapper());
 	}
 
 	@Override
-	public List<RejectRfp> getconverttorfp() {
+	public List<RejectRfp> getConvertToRfp() {
 		// TODO Auto-generated method stub
 		String convertrfp = "select rfpr_enqr_id,rfpr_created_ausr_id,rfpr_status,rfpr_assignedto,rfpr_subject,rfpr_intro_note from tracker_rfp";
 		return jdbctemplate.query(convertrfp, new RejectRfpRowMapper());
 	}
 
 	@Override
-	public List<RejectRfp> getrfpreject() {
+	public List<RejectRfp> getRfpReject() {
 		// TODO Auto-generated method stub
 		String rfpreject = "select rfpr_enqr_id,rfpr_created_ausr_id,rfpr_status,rfpr_assignedto,rfpr_subject,rfpr_intro_note from  tracker_rfp  where rfpr_id  in  (select rej_rfpr_id from rejected_rfps)";
 		return jdbctemplate.query(rfpreject, new RejectRfpRowMapper());
@@ -63,7 +63,7 @@ public class TrackerEnquiryDaoImp implements TrackerEnquiryDao {
 	}
 
 	@Override
-	public List<TrackerRfp> getcompleted() {
+	public List<TrackerRfp> getCompleted() {
 		// TODO Auto-generated method stub
 		String complete = "select rfpr_id,rpfd_reviewedby,rfpd_desc,rpdf_status,rfpd_type,rfpd_sharedstatus from tracker_rfpr_documents where rpdf_status='Completed'";
 		return jdbctemplate.query(complete, new TrackerRfpCompleteRowMapper());

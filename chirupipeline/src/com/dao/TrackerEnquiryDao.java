@@ -9,19 +9,19 @@ import com.model.TrackerEnquiry;
 import com.model.TrackerRfp;
 
 public interface TrackerEnquiryDao {
+	// we can access the model class in TrackerEnquiry pojoClass
+	List<TrackerEnquiry> getEnquiry();
 
-	List<TrackerEnquiry> getEnquiryById();
+	List<RejectEnquiry> getEnquiryReject();
 
-	List<RejectEnquiry> getenquiryreject();
+	List<TrackerEnquiry> getEnquiryApprove();
 
-	List<TrackerEnquiry> getenquiryapprove();
+	List<RejectRfp> getConvertToRfp();
 
-	List<RejectRfp> getconverttorfp();
-
-	List<RejectRfp> getrfpreject();
+	List<RejectRfp> getRfpReject();
 
 	List<RejectRfp> getRfpApprove();
 
-	List<TrackerRfp> getcompleted();
+	List<TrackerRfp> getCompleted();
 
 }
